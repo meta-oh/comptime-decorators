@@ -1,6 +1,6 @@
 {
   "name": "@meta-oh/comptime-decorators",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "",
   "license": "ISC",
   "type": "module",
@@ -9,10 +9,8 @@
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.5",
     "@babel/traverse": "^7.26.5",
-    "@babel/types": "^7.26.5",
-    "@meta-oh/replacer": "npm:@jsr/meta-oh__replacer@^0.1.0",
-    "@types/rollup": "^0.51.4",
-    "rollup": "^4.31.0"
+    "@babel/types": "^7.26.8",
+    "esbuild": "^0.25.0"
   },
   "devDependencies": {
     "@types/babel__generator": "^7.6.8",

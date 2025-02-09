@@ -1,0 +1,6 @@
+{
+  "name": "@meta-oh/comptime-decorators",
+  "version": "1.0.0",
+  "license": "MIT",
+  "exports": "./main.js"
+}

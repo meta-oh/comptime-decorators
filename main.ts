@@ -8,6 +8,10 @@ import { extname } from "path";
 
 const INCLUDE_FILES_REGEX = /\.(t|j)sx?/;
 const UNKNOWN_DECORATOR = (path) => new Error(`Unknown comptime decorator '${generate(path.node).code}'`);
+const PARSER_OPTIONS: parser.ParserOptions = {
+    plugins: ['decorators', 'typescript'],
+    sourceType: 'module',
+}
 
 /**
  * Represents a decorator function that is executed at compile time.
@@ -31,13 +35,13 @@ export type DecoratorDeclaration = (this: { path: string, source: string, ast: p
  * - If a decorator matches a registered declaration, it is executed.
  * - The transformed AST is then converted back to code.
  */
-function ComptimeDecoratorsPlugin(declarations: Record<string, DecoratorDeclaration>): Plugin {
+function ComptimeDecoratorsPlugin(declarations: Record<string, DecoratorDeclaration>, parserOptions: parser.ParserOptions = PARSER_OPTIONS): Plugin {
     return {
         name: "ComptimeDecorators",
         setup(build) {
             build.onLoad({ filter: INCLUDE_FILES_REGEX }, async (args) => {
                 let code = await fs.readFile(args.path, 'utf8');
-                const ast = parser.parse(code, { plugins: ['decorators', 'typescript'] });
+                const ast = parser.parse(code, parserOptions);
 
                 traverse(ast, {
                     Decorator(path) {

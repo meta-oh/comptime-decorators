@@ -1,10 +1,19 @@
 import fs from "fs/promises";
 import * as T from '@babel/types';
-import traverse, { NodePath } from '@babel/traverse';
+import _traverse, { NodePath } from '@babel/traverse';
 import parser from '@babel/parser';
-import generate from '@babel/generator';
+import _generate from '@babel/generator';
 import { Plugin } from 'esbuild';
 import { extname } from "path";
+
+const traverse: typeof _traverse = typeof _traverse == 'object'
+	? (_traverse as any).default
+	: _traverse;
+
+const generate: typeof _generate = typeof _generate == 'object'
+	? (_generate as any).default
+	: _generate;
+
 
 const INCLUDE_FILES_REGEX = /\.(t|j)sx?/;
 const UNKNOWN_DECORATOR = (path) => new Error(`Unknown comptime decorator '${generate(path.node).code}'`);

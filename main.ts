@@ -48,12 +48,21 @@ function ComptimeDecoratorsPlugin(declarations: Record<string, DecoratorDeclarat
     return {
         name: "ComptimeDecorators",
         setup(build) {
+            const debug = build.initialOptions.logLevel == 'debug' 
+                ? (message: string) => console.log(message)
+                : _ => void 0;
+
             build.onLoad({ filter: INCLUDE_FILES_REGEX }, async (args) => {
+                debug(`reading '${args.path}'`);
                 let code = await fs.readFile(args.path, 'utf8');
+                
+                debug(`parsing '${args.path}'`);
                 const ast = parser.parse(code, parserOptions);
 
                 traverse(ast, {
                     Decorator(path) {
+                        debug(`encontered decorator: ${JSON.stringify(path.node, null, 2)}`);
+                        
                         const expr = path.node.expression;
                 
                         let callback: DecoratorDeclaration | undefined;
@@ -79,7 +88,7 @@ function ComptimeDecoratorsPlugin(declarations: Record<string, DecoratorDeclarat
                 });
 
                 const transformedCode = generate(ast).code;
-                                    
+
                 return { contents: transformedCode, loader: extname(args.path).slice(1) as any };
             });
         }

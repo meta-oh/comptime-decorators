@@ -2,5 +2,8 @@
   "name": "@meta-oh/comptime-decorators",
   "version": "2.0.0",
   "license": "ISC",
-  "exports": "./main.ts"
+  "exports": {
+    "./babel": "./src/babel.ts",
+    "./esbuild": "./src/esbuild.ts"
+  }
 }

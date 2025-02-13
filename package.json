@@ -5,8 +5,8 @@
   "license": "ISC",
   "type": "module",
   "exports": {
-    "babel": "./src/babel.ts",
-    "esbuild": "./src/esbuild.ts"
+    "./babel": "./src/babel.ts",
+    "./esbuild": "./src/esbuild.ts"
   },
   "dependencies": {
     "@babel/core": "^7.26.8",

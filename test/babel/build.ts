@@ -1,16 +1,23 @@
 // @ts-nocheck
 
 import fs from 'fs';
-import esbuild from 'esbuild';
 import path, { dirname } from 'path';
-import ComptimeDecoratorsPlugin from "../main";
+import ComptimeDecoratorsPlugin from "../../src/babel";
 import { fileURLToPath } from 'url';
 import * as T from '@babel/types';
+import parser from '@babel/parser';
+import { transformFromAstSync } from '@babel/core';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-esbuild.build({
-    entryPoints: [path.join(__dirname, 'main.ts')],
+const code = fs.readFileSync(path.join(__dirname, 'main.ts'), 'utf-8');
+
+const ast = parser.parse(code, {
+    sourceType: 'module',
+    plugins: ['typescript', 'decorators'],
+});
+
+const { code: transformedCode } = transformFromAstSync(ast, code, {
     plugins: [
         ComptimeDecoratorsPlugin({
             log(path) {
@@ -34,5 +41,8 @@ esbuild.build({
             }
         })
     ],
-    outfile: "out.js"
+    presets: ['@babel/preset-typescript'],
+    filename: 'main.ts'
 });
+
+fs.writeFileSync('out.js', transformedCode);

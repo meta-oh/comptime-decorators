@@ -1,11 +1,15 @@
 {
   "name": "@meta-oh/comptime-decorators",
-  "version": "1.3.0",
+  "version": "2.0.0",
   "description": "",
   "license": "ISC",
   "type": "module",
-  "main": "main.js",
+  "exports": {
+    "babel": "./src/babel.ts",
+    "esbuild": "./src/esbuild.ts"
+  },
   "dependencies": {
+    "@babel/core": "^7.26.8",
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.5",
     "@babel/traverse": "^7.26.5",
@@ -13,6 +17,8 @@
     "esbuild": "^0.25.0"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.26.0",
+    "@types/babel__core": "^7.20.5",
     "@types/babel__generator": "^7.6.8",
     "@types/babel__traverse": "^7.20.6"
   }

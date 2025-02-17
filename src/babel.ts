@@ -1,5 +1,5 @@
 import * as T from '@babel/types';
-import { DecoratorDeclaration, UNKNOWN_DECORATOR_ERROR } from "./constants";
+import { type DecoratorDeclaration, UNKNOWN_DECORATOR_ERROR } from "./constants";
 import type { PluginObj } from '@babel/core';
 import parser from '@babel/parser';
 
@@ -39,4 +39,4 @@ function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, 
 }
 
 export default ComptimeDecorators
-export { DecoratorDeclaration }
+export type { DecoratorDeclaration }

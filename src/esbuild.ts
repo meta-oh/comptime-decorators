@@ -1,7 +1,7 @@
 import * as T from '@babel/types';
 import fs from "fs/promises";
 import type { Plugin } from "esbuild";
-import { DecoratorDeclaration, PARSER_OPTIONS, UNKNOWN_DECORATOR_ERROR } from "./constants";
+import { type DecoratorDeclaration, PARSER_OPTIONS, UNKNOWN_DECORATOR_ERROR } from "./constants";
 import parser from '@babel/parser';
 import { extname } from "path";
 import _traverse from '@babel/traverse';
@@ -62,4 +62,4 @@ function processDecorators(code: string, path: string, declarations: Record<stri
 }
 
 export default ComptimeDecorators;
-export { DecoratorDeclaration }
+export type { DecoratorDeclaration }

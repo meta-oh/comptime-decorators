@@ -1,5 +1,5 @@
 import * as T from '@babel/types';
-import { DecoratorDeclaration, UNKNOWN_DECORATOR } from "./constants";
+import { DecoratorDeclaration, UNKNOWN_DECORATOR_ERROR } from "./constants";
 import type { PluginObj } from '@babel/core';
 import parser from '@babel/parser';
 
@@ -24,7 +24,7 @@ function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, 
                     }
                 }
 
-                if (!callback) throw UNKNOWN_DECORATOR(path);
+                if (!callback) throw UNKNOWN_DECORATOR_ERROR(path);
 
                 const context = {
                     path: state.file.opts.filename || '',
@@ -39,3 +39,4 @@ function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, 
 }
 
 export default ComptimeDecorators
+export { DecoratorDeclaration }

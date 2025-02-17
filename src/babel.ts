@@ -1,6 +1,6 @@
 import * as T from '@babel/types';
 import { DecoratorDeclaration, UNKNOWN_DECORATOR } from "./constants";
-import { PluginObj } from '@babel/core';
+import type { PluginObj } from '@babel/core';
 import parser from '@babel/parser';
 
 function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, ...args: unknown[]): PluginObj {

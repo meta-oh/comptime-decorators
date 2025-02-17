@@ -5,5 +5,6 @@
   "exports": {
     "./babel": "./src/babel.ts",
     "./esbuild": "./src/esbuild.ts"
-  }
+  },
+  "$schema": "https://jsr.io/schema/config-file.v1.json"
 }

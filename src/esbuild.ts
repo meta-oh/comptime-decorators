@@ -1,6 +1,6 @@
 import * as T from '@babel/types';
 import fs from "fs/promises";
-import { Plugin } from "esbuild";
+import type { Plugin } from "esbuild";
 import { DecoratorDeclaration, PARSER_OPTIONS, UNKNOWN_DECORATOR } from "./constants";
 import parser from '@babel/parser';
 import { extname } from "path";

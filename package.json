@@ -1,6 +1,6 @@
 {
   "name": "@meta-oh/comptime-decorators",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "",
   "license": "ISC",
   "type": "module",
@@ -9,12 +9,14 @@
     "./esbuild": "./src/esbuild.ts"
   },
   "dependencies": {
-    "@babel/core": "^7.26.8",
     "@babel/generator": "^7.26.5",
     "@babel/parser": "^7.26.5",
     "@babel/traverse": "^7.26.5",
-    "@babel/types": "^7.26.8",
-    "esbuild": "^0.25.0"
+    "@babel/types": "^7.26.8"
+  },
+  "optionalDependencies": {
+    "esbuild": "^0.25.0",
+    "@babel/core": "^7.26.8"
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.26.0",

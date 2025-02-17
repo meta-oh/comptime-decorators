@@ -4,7 +4,7 @@ import { Plugin } from "esbuild";
 import { DecoratorDeclaration, PARSER_OPTIONS, UNKNOWN_DECORATOR } from "./constants";
 import parser from '@babel/parser';
 import { extname } from "path";
-import _traverse, { NodePath } from '@babel/traverse';
+import _traverse from '@babel/traverse';
 import _generate from '@babel/generator';
 
 const traverse: typeof _traverse = typeof _traverse == 'object'
@@ -17,20 +17,20 @@ const generate: typeof _generate = typeof _generate == 'object'
 
 const INCLUDE_FILES_REGEX = /\.(t|j)sx?/;
 
-export function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, parserOptions: parser.ParserOptions = PARSER_OPTIONS): Plugin {
+function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, parserOptions: parser.ParserOptions = PARSER_OPTIONS, ...args: unknown[]): Plugin {
     return {
         name: "ComptimeDecorators",
         setup(build) {
-            build.onLoad({ filter: INCLUDE_FILES_REGEX }, async (args) => {
-                const code = await fs.readFile(args.path, 'utf8');
-                const transformedCode = processDecorators(code, args.path, declarations, parserOptions);
-                return { contents: transformedCode, loader: extname(args.path).slice(1) as any };
+            build.onLoad({ filter: INCLUDE_FILES_REGEX }, async ({ path }) => {
+                const code = await fs.readFile(path, 'utf8');
+                const transformedCode = processDecorators(code, path, declarations, parserOptions, args);
+                return { contents: transformedCode, loader: extname(path).slice(1) as any };
             });
         }
     } satisfies Plugin;
 }
 
-function processDecorators(code: string, path: string, declarations: Record<string, DecoratorDeclaration>, parserOptions: parser.ParserOptions = PARSER_OPTIONS): string {
+function processDecorators(code: string, path: string, declarations: Record<string, DecoratorDeclaration>, parserOptions: parser.ParserOptions = PARSER_OPTIONS, args: unknown[]): string {
     const ast = parser.parse(code, parserOptions);
     const context = { path, source: code, ast };
 
@@ -54,7 +54,7 @@ function processDecorators(code: string, path: string, declarations: Record<stri
 
             if (!callback) throw UNKNOWN_DECORATOR(path);
 
-            callback.bind(context)(path);
+            callback.bind(context)(path, ...args);
         }
     });
 

@@ -13,4 +13,4 @@ export const PARSER_OPTIONS: parser.ParserOptions = {
     sourceType: 'module',
 }
 
-export type DecoratorDeclaration = (this: { path: string, source: string, ast: parser.ParseResult<T.File> }, path: NodePath<T.Decorator>) => unknown;
+export type DecoratorDeclaration = (this: { path: string, source: string, ast: parser.ParseResult<T.File> }, path: NodePath<T.Decorator>, ...args: unknown[]) => unknown;

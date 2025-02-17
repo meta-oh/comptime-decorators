@@ -3,7 +3,7 @@ import { DecoratorDeclaration, UNKNOWN_DECORATOR } from "./constants";
 import { PluginObj } from '@babel/core';
 import parser from '@babel/parser';
 
-function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>): PluginObj {
+function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, ...args: unknown[]): PluginObj {
     return {
         name: 'comptime-decorators',
         visitor: {
@@ -32,7 +32,7 @@ function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>):
                     ast: state.file.ast as parser.ParseResult<T.File>
                 };
 
-                callback.bind(context)(path);
+                callback.bind(context)(path, ...args);
             }
         }
     } as PluginObj;

@@ -6,6 +6,13 @@ import parser from '@babel/parser';
 function ComptimeDecorators(declarations: Record<string, DecoratorDeclaration>, ...args: unknown[]): PluginObj {
     return {
         name: 'comptime-decorators',
+        manipulateOptions(opts, parserOpts) {
+            parserOpts.plugins ??= [];
+
+            if (!parserOpts.plugins.some((p: any) => Array.isArray(p) ? p[0] === "decorators" : p === "decorators")) {
+                parserOpts.plugins.push(["decorators", { decoratorsBeforeExport: true }]);
+            }
+        },
         visitor: {
             Decorator(path, state) {
                 const expr = path.node.expression;
